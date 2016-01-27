@@ -3,8 +3,16 @@
 import tweepy
 import datetime  # datetimeモジュールのインポート
 import time
+import sys
 
-FILE = "sotsuron"
+argvs = sys.argv
+argc = len(argvs)
+
+if argc != 2:
+    print('ファイルを指定してください')
+    exit()
+
+filename = argvs[1]
 
 
 def getapi():
@@ -15,7 +23,7 @@ def getapi():
     auth = tweepy.OAuthHandler(CONSUMER_KEY, CONSUMER_SECRET)
     redirect_url = auth.get_authorization_url()
     print('次のURLブラウザにコピーして開いて認証して' + redirect_url)
-    verifier = input('ここにPINコードを入力').strip()
+    verifier = input('ここにPINコードを入力：').strip()
     auth.get_access_token(verifier)
     ACCESS_TOKEN = auth.access_token
     ACCESS_SECRET = auth.access_token_secret
@@ -24,7 +32,7 @@ def getapi():
 
 
 def getmojisuu(files):
-    with open(files + '.tex', 'r') as f:
+    with open(files, 'r') as f:
         mojisuu = len(f.read())
     return mojisuu
 
@@ -50,7 +58,7 @@ def tweet(api, status, before=0):
 
 api = getapi()
 
-mojisuu = getmojisuu(FILE)
+mojisuu = getmojisuu(filename)
 beforemojisuu = mojisuu
 status = 'いまのsotsuron.texの文字数は' + str(mojisuu) + 'です．'
 before = tweet(api, status)
@@ -62,7 +70,7 @@ time.sleep((59 - d.minute) * 60)
 while True:
     d = datetime.datetime.today()
     if(d.minute == 0):
-        mojisuu = getmojisuu(FILE)
+        mojisuu = getmojisuu(filename)
         if mojisuu > beforemojisuu:
             status = 'いまのsotsuron.texの文字数は' + \
                 str(mojisuu) + 'です．（' + str(mojisuu - beforemojisuu) + '文字増加）'
