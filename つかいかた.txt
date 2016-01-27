@@ -1,0 +1,17 @@
+つかいかた
+・python3をインストールする（公式ホームページへGo）
+・pip3 install tweepyする
+・mojisuu.pyをsotsuron.texと同じフォルダに置く
+・必要に応じてmojisuu.pyの7行目のファイル名（デフォルト：sotsuron）を変更する
+・python3 mojisuu.pyする
+・指示に従ってTwitter承認する
+・起動時と毎時0分に文字数がツイートされる
+
+<<<<<<< HEAD
+=======
+t = time.time()
+X = numpy.random.random((1000, 3))
+D = numpy.empty((1000, 1000))
+pairwise_python(X, D)
+print("python:", time.time() - t)
+>>>>>>> parent of 2f9f735... hoge
